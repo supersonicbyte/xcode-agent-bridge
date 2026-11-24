@@ -1,5 +1,7 @@
 # Xcode Agent Bridge
 
+[![CI](https://github.com/supersonicbyte/xcode-agent-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/supersonicbyte/xcode-agent-bridge/actions/workflows/ci.yml)
+
 Select code in Xcode, press **⌃⌥Space**, and ask **Claude Code** or **Codex** about it, or have them change it, from a small panel that opens next to your selection.
 
 Questions can go to a **session that's already running** in your terminal, with Claude or Codex working there. They can also go to a **new session** that the app starts and that answers only in the panel. Either way it's your own `claude` or `codex`, so your CLAUDE.md / AGENTS.md, MCP servers, plugins, logins and model choices all apply.
@@ -15,6 +17,18 @@ https://github.com/user-attachments/assets/7ab3b0b8-d54c-4889-a5be-d3e2cad5808d
 - Accessibility permission, used to read the selection in Xcode.
 
 ## Install
+
+### Download
+
+Get the latest `XcodeAgentBridge-*.zip` from [Releases](https://github.com/supersonicbyte/xcode-agent-bridge/releases), unzip it, and move **Xcode Agent Bridge.app** to Applications. The app isn't notarized yet, so the first time, right-click it and choose **Open**, or run:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Xcode Agent Bridge.app"
+```
+
+Release builds are signed ad hoc, so macOS asks for Accessibility access again after each update.
+
+### Build from source
 
 ```sh
 scripts/build-app.sh --install

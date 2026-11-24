@@ -6,6 +6,10 @@
 # The app is signed with your first "Apple Development" identity (override with
 # CODESIGN_IDENTITY). A stable signature keeps the Accessibility permission across
 # rebuilds; ad-hoc signing ("-") works but macOS asks again after every build.
+#
+#   UNIVERSAL=1        build for both Apple silicon and Intel
+#   VERSION=1.2.3      set the version shown in the app (default: Info.plist)
+#   BUILD_NUMBER=42    set the build number
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -13,13 +17,22 @@ CONFIGURATION="${CONFIGURATION:-release}"
 APP_NAME="Xcode Agent Bridge"
 APP="build/$APP_NAME.app"
 
-swift build -c "$CONFIGURATION" --product XcodeAgentBridge
-BIN_DIR="$(swift build -c "$CONFIGURATION" --show-bin-path)"
+BUILD_ARGS=(-c "$CONFIGURATION")
+if [[ "${UNIVERSAL:-0}" == "1" ]]; then BUILD_ARGS+=(--arch arm64 --arch x86_64); fi
+
+swift build "${BUILD_ARGS[@]}" --product XcodeAgentBridge
+BIN_DIR="$(swift build "${BUILD_ARGS[@]}" --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN_DIR/XcodeAgentBridge" "$APP/Contents/MacOS/XcodeAgentBridge"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
+if [[ -n "${VERSION:-}" ]]; then
+    /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$APP/Contents/Info.plist"
+fi
+if [[ -n "${BUILD_NUMBER:-}" ]]; then
+    /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$APP/Contents/Info.plist"
+fi
 
 IDENTITY="${CODESIGN_IDENTITY:-$(security find-identity -p codesigning -v 2>/dev/null | awk '/Apple Development/ { print $2; exit }')}"
 codesign --force --sign "${IDENTITY:--}" "$APP"
