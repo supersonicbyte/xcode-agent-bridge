@@ -4,6 +4,8 @@ Select code in Xcode, press **⌃⌥Space**, and ask **Claude Code** or **Codex*
 
 Questions can go to a **session that's already running** in your terminal, with Claude or Codex working there. They can also go to a **new session** that the app starts and that answers only in the panel. Either way it's your own `claude` or `codex`, so your CLAUDE.md / AGENTS.md, MCP servers, plugins, logins and model choices all apply.
 
+https://github.com/user-attachments/assets/7ab3b0b8-d54c-4889-a5be-d3e2cad5808d
+
 ## Requirements
 
 - macOS 15 or later, Xcode, and Swift 6.2 or later to build.
