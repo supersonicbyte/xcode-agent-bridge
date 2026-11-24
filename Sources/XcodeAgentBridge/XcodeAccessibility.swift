@@ -12,7 +12,7 @@ struct XcodeCapture {
     var editor: AXUIElement?
 }
 
-enum CaptureError: LocalizedError {
+nonisolated enum CaptureError: LocalizedError {
     case notTrusted, xcodeNotRunning, noEditor, noFile
 
     var errorDescription: String? {

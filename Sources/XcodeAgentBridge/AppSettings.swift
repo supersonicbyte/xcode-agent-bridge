@@ -2,7 +2,7 @@ import Foundation
 import BridgeCore
 import Carbon.HIToolbox
 
-enum HotKeyPreset: String, CaseIterable, Identifiable {
+nonisolated enum HotKeyPreset: String, CaseIterable, Identifiable {
     case controlOptionSpace, controlOptionA, controlOptionCommandA, controlShiftSpace
 
     var id: String { rawValue }

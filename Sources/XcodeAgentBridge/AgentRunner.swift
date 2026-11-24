@@ -48,7 +48,7 @@ import BridgeCore
     }
 }
 
-struct AgentProcessError: LocalizedError {
+nonisolated struct AgentProcessError: LocalizedError {
     var status: Int32
     var output: String
     var errorDescription: String? {

@@ -2,7 +2,7 @@ import Foundation
 import BridgeCore
 
 /// Where a question goes: a session that's already running, or a new one the app starts.
-enum AgentTarget: Hashable {
+nonisolated enum AgentTarget: Hashable {
     case new(AgentKind)
     case running(RunningAgent)
 
@@ -21,7 +21,7 @@ enum AgentTarget: Hashable {
     }
 
     /// A running session in the project when that's preferred and there is one, else a new session.
-    static func preferred(running: [RunningAgent], project: String) -> AgentTarget {
+    @MainActor static func preferred(running: [RunningAgent], project: String) -> AgentTarget {
         if AppSettings.shared.preferRunningSessions,
            let best = RunningAgent.sorted(running, for: project).first(where: { $0.relevance(to: project) > 0 }) {
             return .running(best)
