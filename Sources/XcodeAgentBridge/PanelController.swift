@@ -444,7 +444,6 @@ final class PanelController {
     }
 }
 
-extension CaptureError: Equatable {}
 
 /// Receives display-link callbacks, which need an Objective-C target.
 final class FrameTicker: NSObject {
